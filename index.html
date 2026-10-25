@@ -2,112 +2,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pakistan Weather Explorer | Web GIS</title>
 
-  <title>Public Transport Explorer | Islamabad & Rawalpindi</title>
-  <meta name="description" content="Explore mapped public transport stops and stations in Islamabad and Rawalpindi using OpenStreetMap data.">
-
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
-  <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="app">
-    <aside class="sidebar">
-      <header class="brand">
-        <div class="brand-icon">T</div>
+    <header class="topbar">
         <div>
-          <h1>Transit Explorer</h1>
-          <p>ISLAMABAD & RAWALPINDI</p>
+            <p class="eyebrow">WEB GIS APPLICATION</p>
+            <h1>Pakistan Weather Explorer</h1>
+            <p class="subtitle">Live weather information on an interactive map</p>
         </div>
-      </header>
-
-      <section class="intro">
-        <span class="eyebrow">WEB GIS APPLICATION</span>
-        <h2>Explore public transport</h2>
-        <p>Find mapped transport stops and stations across the twin cities.</p>
-      </section>
-
-      <section class="stats">
-        <div>
-          <span class="stat-label">Features found</span>
-          <strong id="stationCount">0</strong>
+        <div class="live-status">
+            <span class="status-dot"></span>
+            Weather API
         </div>
-        <span id="apiBadge" class="status-badge loading">Loading data</span>
-      </section>
+    </header>
 
-      <section class="controls">
-        <label for="searchInput">Search locations</label>
-        <input
-          id="searchInput"
-          type="search"
-          placeholder="Search by station or stop name..."
-          autocomplete="off"
-        >
+    <main class="dashboard">
+        <aside class="sidebar">
+            <section class="intro">
+                <h2>Weather Dashboard</h2>
+                <p>Explore current weather conditions across selected cities in Pakistan.</p>
+            </section>
 
-        <label for="categoryFilter">Transport category</label>
-        <select id="categoryFilter">
-          <option value="all">All categories</option>
-          <option value="Bus Stop">Bus Stops</option>
-          <option value="Bus Terminal">Bus Terminals</option>
-          <option value="Railway Station">Railway Stations</option>
-          <option value="Other Transport Feature">Other Transport Features</option>
-        </select>
+            <section class="summary-grid">
+                <div class="summary-card">
+                    <span>Locations</span>
+                    <strong id="locationCount">0</strong>
+                </div>
+                <div class="summary-card">
+                    <span>Loaded</span>
+                    <strong id="loadedCount">0</strong>
+                </div>
+            </section>
 
-        <div class="button-row">
-          <button id="refreshButton" class="primary-button" type="button">
-            Refresh data
-          </button>
-          <button id="resetButton" class="secondary-button" type="button">
-            Reset
-          </button>
-        </div>
-      </section>
+            <label for="searchInput">Search a city</label>
+            <input id="searchInput" type="search" placeholder="e.g. Islamabad">
 
-      <section class="results-section">
-        <div class="section-heading">
-          <h3>Mapped locations</h3>
-          <span id="shownCount">0 shown</span>
-        </div>
-        <p id="statusMessage" class="status-message" role="status" aria-live="polite">
-          Preparing the map...
-        </p>
-        <div id="stationList" class="station-list"></div>
-      </section>
+            <label for="conditionFilter">Filter by condition</label>
+            <select id="conditionFilter">
+                <option value="all">All conditions</option>
+                <option value="clear">Clear</option>
+                <option value="cloudy">Cloudy or foggy</option>
+                <option value="rain">Rain or drizzle</option>
+                <option value="snow">Snow</option>
+                <option value="storm">Thunderstorm</option>
+            </select>
 
-      <footer class="sidebar-footer">
-        <p>
-          Data:
-          <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener noreferrer">
-            OpenStreetMap
-          </a>
-          contributors
-        </p>
-        <p>Study area: Islamabad and Rawalpindi, Pakistan</p>
-      </footer>
-    </aside>
+            <label for="temperatureFilter">Temperature filter</label>
+            <select id="temperatureFilter">
+                <option value="all">All temperatures</option>
+                <option value="cold">Below 15°C</option>
+                <option value="mild">15°C to 30°C</option>
+                <option value="hot">Above 30°C</option>
+            </select>
 
-    <main class="map-panel">
-      <div class="map-heading">
-        <div>
-          <span class="eyebrow">LIVE OPEN DATA</span>
-          <h2>Transport map</h2>
-        </div>
-        <div class="map-tools">
-          <span class="map-tag">Interactive map</span>
-        </div>
-      </div>
+            <div class="button-row">
+                <button id="refreshButton" class="primary-button">Refresh data</button>
+                <button id="resetButton" class="secondary-button">Reset</button>
+            </div>
 
-      <div id="map" aria-label="Interactive public transport map"></div>
+            <div id="statusMessage" class="status-message" role="status" aria-live="polite">
+                Preparing the map...
+            </div>
 
-      <div class="map-footer">
-        <span>Use the map to explore mapped transport locations.</span>
-        <span>Map tiles © OpenStreetMap contributors</span>
-      </div>
+            <section class="location-section">
+                <div class="section-heading">
+                    <h3>City observations</h3>
+                    <span id="resultCount">0 results</span>
+                </div>
+                <div id="locationList" class="location-list"></div>
+            </section>
+
+            <footer class="sidebar-footer">
+                <p><strong>Study area:</strong> Selected cities across Pakistan</p>
+                <p><strong>Weather data:</strong> Open-Meteo</p>
+                <p><strong>Map data:</strong> © OpenStreetMap contributors</p>
+                <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo API</a>
+                <span> · </span>
+                <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">Map attribution</a>
+            </footer>
+        </aside>
+
+        <section class="map-section">
+            <div class="map-heading">
+                <div>
+                    <h2>Weather Map of Pakistan</h2>
+                    <p>Select a marker to view weather details.</p>
+                </div>
+                <span class="map-tag">Interactive Map</span>
+            </div>
+
+            <div id="map" aria-label="Interactive weather map of Pakistan"></div>
+
+            <div class="map-legend">
+                <strong>Temperature</strong>
+                <span><i class="legend-dot cold-dot"></i> Below 15°C</span>
+                <span><i class="legend-dot mild-dot"></i> 15°C–30°C</span>
+                <span><i class="legend-dot hot-dot"></i> Above 30°C</span>
+            </div>
+
+            <p class="map-note">
+                Weather values are retrieved for selected city coordinates and may represent
+                model-based conditions rather than measurements from a station in the city.
+            </p>
+        </section>
     </main>
-  </div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="script.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
