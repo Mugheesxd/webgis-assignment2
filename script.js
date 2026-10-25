@@ -179,7 +179,7 @@ function updateMapAndList() {
     weatherData.forEach(city => {
         city.marker = null;
 
-        if (!city.weather) return;
+        if (!city.weather || !matchesFilters(city)) return;
 
         const color = getTemperatureColor(city.weather.temperature);
 
@@ -344,9 +344,9 @@ async function loadWeatherData() {
     }
 }
 
-searchInput.addEventListener("input", renderLocations);
-conditionFilter.addEventListener("change", renderLocations);
-temperatureFilter.addEventListener("change", renderLocations);
+searchInput.addEventListener("input", updateMapAndList);
+conditionFilter.addEventListener("change", updateMapAndList);
+temperatureFilter.addEventListener("change", updateMapAndList);
 
 refreshButton.addEventListener("click", loadWeatherData);
 
