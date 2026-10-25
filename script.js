@@ -7,8 +7,21 @@ const cities = [
     { name: "Peshawar", lat: 34.0151, lon: 71.5249 },
     { name: "Quetta", lat: 30.1798, lon: 66.9750 },
     { name: "Multan", lat: 30.1575, lon: 71.5249 },
-    { name: "Gilgit", lat: 35.9208, lon: 74.3080 }
+    { name: "Gilgit", lat: 35.9208, lon: 74.3080 },
+    { name: "Faisalabad", lat: 31.4504, lon: 73.1350 },
+    { name: "Sialkot", lat: 32.4945, lon: 74.5229 },
+    { name: "Gujranwala", lat: 32.1877, lon: 74.1945 },
+    { name: "Bahawalpur", lat: 29.3956, lon: 71.6836 },
+    { name: "Sargodha", lat: 32.0836, lon: 72.6711 },
+    { name: "Hyderabad", lat: 25.3960, lon: 68.3578 },
+    { name: "Sukkur", lat: 27.7052, lon: 68.8574 },
+    { name: "Gwadar", lat: 25.1264, lon: 62.3225 },
+    { name: "Muzaffarabad", lat: 34.3700, lon: 73.4711 },
+    { name: "Skardu", lat: 35.2971, lon: 75.6333 },
+    { name: "Chitral", lat: 35.8518, lon: 71.7864 },
+    { name: "Abbottabad", lat: 34.1688, lon: 73.2215 }
 ];
+
 
 const API_URL = "https://api.open-meteo.com/v1/forecast";
 
