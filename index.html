@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Public Transport and Mobility — Islamabad &amp; Rawalpindi</title>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <!-- Our CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>Public Transport and Mobility — Islamabad &amp; Rawalpindi</h1>
+    <p>Interactive Web GIS Map of Metrobus Corridors, Electric Feeder Routes, Bus Stops &amp; Rail Terminals</p>
+  </header>
+
+  <div id="status">Connecting to OpenStreetMap Overpass API...</div>
+
+  <!-- Main Layout: Left Sidebar for All Menus/Filters + Right Interactive Map -->
+  <div class="main-container">
+
+    <!-- Left Sidebar (All Menus, Filters, Route Buttons & Station List) -->
+    <aside class="left-sidebar">
+
+      <div class="sidebar-card">
+        <h3>Search &amp; Filters</h3>
+
+        <div class="control-group">
+          <label for="searchInput">Search Stop / Area</label>
+          <input id="searchInput" type="text" placeholder="e.g. Saddar, Faizabad, PIMS, F-8, Park Road...">
+        </div>
+
+        <div class="control-group">
+          <label for="categoryFilter">Transport Type</label>
+          <select id="categoryFilter">
+            <option value="all">All Transport Features</option>
+            <option value="Metrobus Station">Metrobus Stations (BRT)</option>
+            <option value="Electric Feeder Stop">CDA Electric Feeder Bus Stops</option>
+            <option value="Bus Terminal">Intercity Bus Terminals</option>
+            <option value="Railway Station">Railway Stations</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label for="routeSelect">Highlight Route Corridor</label>
+          <select id="routeSelect">
+            <option value="all">Show All Transit Routes</option>
+            <option value="red_line">Red Line Metrobus (Saddar – Pak Secretariat)</option>
+            <option value="orange_line">Orange Line Metrobus (Faiz Ahmed Faiz – N-5)</option>
+            <option value="blue_line">Blue Line Metrobus (PIMS – Koral / Gulberg)</option>
+            <option value="green_line">Green Line Metrobus (PIMS – Bhara Kahu)</option>
+            <option value="fr4_park_road">Electric Bus FR-4 (PIMS – COMSATS Park Road)</option>
+            <option value="fr7_markaz">Electric Bus FR-7 (PIMS – F-8 / F-10 / G-11)</option>
+            <option value="railway_ml1">Pakistan Railways Line (Golra – Margalla – RWP)</option>
+          </select>
+        </div>
+
+        <button id="resetBtn" type="button">Reset Map &amp; Filters</button>
+      </div>
+
+      <!-- Clickable Route Pills on the Left Side -->
+      <div class="sidebar-card">
+        <h3>Click a Route to Highlight Path</h3>
+        <div id="routePills" class="route-pills">
+          <button type="button" class="route-pill active" data-route="all">All Routes</button>
+          <button type="button" class="route-pill" data-route="red_line"><span class="pill-dot" style="background:#e11d48"></span>Red Line BRT</button>
+          <button type="button" class="route-pill" data-route="orange_line"><span class="pill-dot" style="background:#ea580c"></span>Orange Line BRT</button>
+          <button type="button" class="route-pill" data-route="blue_line"><span class="pill-dot" style="background:#2563eb"></span>Blue Line BRT</button>
+          <button type="button" class="route-pill" data-route="green_line"><span class="pill-dot" style="background:#16a34a"></span>Green Line BRT</button>
+          <button type="button" class="route-pill" data-route="fr4_park_road"><span class="pill-dot" style="background:#0d9488"></span>Electric FR-4 (Park Rd)</button>
+          <button type="button" class="route-pill" data-route="fr7_markaz"><span class="pill-dot" style="background:#7c3aed"></span>Electric FR-7 (F-8/G-11)</button>
+          <button type="button" class="route-pill" data-route="railway_ml1"><span class="pill-dot" style="background:#b45309"></span>Pakistan Railways</button>
+        </div>
+      </div>
+
+      <!-- Quick Station & Stop List on the Left Side -->
+      <div class="sidebar-card station-list-card">
+        <div class="list-header">
+          <h3>Stations &amp; Stops</h3>
+          <span id="stationCountBadge" class="count-badge">0</span>
+        </div>
+        <div id="stationList" class="station-list"></div>
+      </div>
+
+    </aside>
+
+    <!-- Right Interactive Map -->
+    <div id="map"></div>
+
+  </div>
+
+  <footer>
+    <p>Data Source: &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a> (Overpass API &amp; OSRM Road Geometry) | Web GIS Applications | BS Remote Sensing and GIS, COMSATS University Islamabad</p>
+  </footer>
+
+  <!-- Leaflet JavaScript -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <!-- Our JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
